@@ -1,89 +1,95 @@
-# Bash-скрипты, часть 6: sed и обработка текстов
-### Лирическое отступление - конвейер в bash
-Pipe (конвейер) – это однонаправленный канал межпроцессного взаимодействия. Конвейеры чаще всего используются в shell-скриптах для связи нескольких команд путем перенаправления вывода одной команды (stdout) на вход (stdin) последующей, используя символ конвеера ‘|’:
+#Bash scripts, part 6: sed and text editing
+
+### A short digression – a pipe in bash.
+
+Pipe is a unidirectional channel of inter-process communication.
+Pipes are mostly used in shell scripts to link multiple commands by redirecting the output of one command (stdout) to the input (stdin) of a subsequent command, using `|`:
 ```shell
 cmd1 | cmd2 | .... | cmdN
 ```
 
-Например:
+For example:
 ```shell
 index=$(echo $arg | cut -f1 -d=)
 val=$(echo $arg | cut -f2 -d=)
 ```
 
-Команда cut используется, если нужно вырезать часть текста. Ключ f задаёт перечень полей для вырезания. Ключ d устанавливает разделитель между полями.
+The `cut` command is used if you need to cut a part of the text. The `f` key specifies a list of fields to cut. The `d` key sets the separator between the fields.
 
-Таким образом, если в переменной arg, находится, например, строка "X=45", то в переменную index запишется -- X, а в val -- 45.
+So if the `arg` variable contains, for example, `X=45`, the variable `index` will be `X`, and `val` will be `45`.
 
-Также, с помощью конвеера, можно удобно отсортировать массив, полученный в результате предыдущей команды.
+You can also use the pipe to sort the array from the previous command.
 
-### Основы работы с sed
-Утилиту sed называют потоковым текстовым редактором. Sed позволяет редактировать потоки данных, основываясь на заданных разработчиком наборах правил. Вот как выглядит схема вызова этой команды:
+### Basics of sed
+
+The sed utility is called a streaming text editor. It allows you to edit data streams based on rule sets specified by the developer. This is what a call of this command looks like:
 ```shell
 sed options file
 ```
 
-По умолчанию sed применяет указанные при вызове правила, выраженные в виде набора команд, к STDIN. Это позволяет передавать данные непосредственно sed. Например, так:
+By default, sed applies the rules specified when called, looking like a set of commands, to STDIN. This allows data to be transmitted directly to sed. For example, like this:
 ```shell
 echo "This is a test" |
 sed 's/test/another test/'
 ```
 
-В данном случае sed заменяет слово «test» в строке, переданной для обработки, словами «another test». В нашем случае применена команда вида s/pattern1/pattern2/. Буква «s» — это сокращение слова «substitute» — команда замены. Sed, выполняя эту команду, просмотрит переданный текст и заменит найденные в нём фрагменты, соответствующие pattern1, на pattern2.
+In this case sed replaces the word "test" in the line passed for processing with "another test". In our case, the command used is `s/pattern1/pattern2/`. The letter "s" is an abbreviation of the word "substitute" - substitute command. When Sed executes this command, it will look through the transmitted text and replace any fragments found in it that match pattern1 with pattern2.
 
-Для выполнения нескольких действий с данными, используйте ключ -e при вызове sed. Например, вот как организовать замену двух фрагментов текста:
+To perform multiple actions on the data, use the -e key when calling sed. For example, here's the replacement of two pieces of a text:
 ```shell
 sed -e 's/This/That/; s/test/another test/'
 ```
 
-sed также имеет команды для удобной обработки массивов, например оставить лишь определённое кол-во элементов, или расставить номера элементов.
+sed also has commands for handling arrays, such as leaving only a certain number of elements, or arranging element numbers.
 
-### Выбор фрагментов текста для обработки
-Приведём ещё один пример. В некоторых случаях с помощью sed надо обработать лишь какую-то часть текста — некую конкретную строку или группу строк. Для достижения такой цели можно задать ограничение на номера обрабатываемых строк.
+### Selection of text fragments to be processed
 
-Содержимое myfile:
+Here is another example. In some cases, sed can be used to process just a part of the text, a specific line or group of lines. To achieve this, you can set a limit to the number of lines to be processed.
+
+Contents of myfile:
 ```
 This is a test.
 This is the second test.
-This is the thrid test.
+This is the third test.
 This is the fourth test.
 ```
 
-Рассмотрим пример, предусматривающий указание номера одной строки, которую нужно обработать:
+Let's look at an example that involves specifying the number of one line to be processed:
 ```shell
 sed '2s/test/another test/' myfile
 ```
 
-Результат работы скрипта:
+
+The result of the script:
 ```
 This is a test.
 This is the second another test.
-This is the thrid test.
+This is the third test.
 This is the fourth test.
 ```
 
-Второй вариант — диапазон строк:
+The second option is a range of lines:
 ```shell
 sed '2,3s/test/another test/' myfile
 ```
 
-Результат работы:
+The result of the work:
 ```
 This is a test.
 This is the second another test.
-This is the thrid another test.
+This is the third another test.
 This is the fourth test.
 ```
 
-Кроме того, можно вызвать команду замены так, чтобы файл был обработан начиная с некоей строки и до конца. Для этого используется символ "$":
+You can also call the replace command so that the file is processed from a certain line all the way to the end.  In this case use " $ " :
 ```shell
 sed '2,$s/test/another test/' myfile
 ```
 
-Результат:
+The result:
 ```
 This is a test.
 This is the second another test.
-This is the thrid another test.
+This is the third another test.
 This is the fourth another test.
 ```

@@ -1,32 +1,35 @@
-# Bash-скрипты, часть 7: язык обработки данных awk
-Утилита awk, или точнее GNU awk, в сравнении с sed, выводит обработку потоков данных на более высокий уровень. Благодаря awk в нашем распоряжении оказывается язык программирования, а не довольно скромный набор команд, отдаваемых редактору. С помощью языка программирования awk можно выполнять следующие действия:
-- Объявлять переменные для хранения данных.
-- Использовать арифметические и строковые операторы для работы с данными.
-- Использовать структурные элементы и управляющие конструкции языка, такие, как оператор if-then и циклы, что позволяет реализовать сложные алгоритмы обработки данных.
-- Создавать форматированные отчёты.
+# Bash scripts, part 7: the awk data processing language
 
-Утилита awk предоставляет очень много возможностей, так как в ней есть многие конструкции, присущие полноценным языкам программирования, например, условные операторы, циклы, пользовательские переменные и функции и т.д. Однако здесь будет описан лишь краткий пример, показывающий суть работы с этой утилитой.
+The awk utility, or more precisely GNU awk, in comparison to sed, takes the handling of data streams to a higher level. Thanks to awk, we have a programming language at our disposal instead of the rather small set of commands given to the editor. With the awk programming language, you can perform the following actions:
+- Declare variables to store data.
+- Use arithmetic and string operators to manipulate data.
+- Use structural elements and language control structures, such as if-then operators and loops to implement complex data processing algorithms.
+- Create formatted reports.
 
-Если говорить лишь о возможности создавать форматированные отчёты, которые удобно читать и анализировать, то это оказывается очень кстати при работе с лог-файлами.
+Since the awk utility has many constructs common to programming languages, it provides a lot of features, such as conditional statements, loops, user-defined variables and functions, etc. But here we will only give a quick example to show how to use this utility.
 
-Схема вызова awk выглядит так:
+The ability to create formatted reports that are easy to read and analyse comes in handy when working with log files.
+
+The awk call looks like this:
 ```shell
 awk options program file
 ```
 
-Awk воспринимает поступающие к нему данные в виде набора записей. Записи представляют собой наборы полей. Упрощенно, если не учитывать возможности настройки awk и говорить о некоем вполне обычном тексте, строки которого разделены символами перевода строки, запись — это строка. Поле — это слово в строке.
+Awk accepts incoming data as a set of records. The records are sets of fields. To put it simply, if we ignore the awk customization options and talk about some quite ordinary text, with lines separated by newline characters, a record is a string. A field is a word in a string.
 
-### Позиционные переменные
-Работа с переменными в awk похожа на работу с параметрами командной строки в bash. По умолчанию awk назначает следующие переменные каждому полю данных, обнаруженному им в записи:
-- $0 — представляет всю строку текста (запись).
-- $1 — первое поле.
-- $2 — второе поле.
-- $n — n-ное поле.
+### Position variables
 
-Поля выделяются из текста с использованием символа-разделителя. По умолчанию — это пробельные символы вроде пробела или символа табуляции.
+Working with variables in awk is similar to working with command line parameters in bash. By default, awk assigns the following variables to each data field it detects in a record:
+- $0 - represents the entire string of text (the record).
+- $1 - the first field.
+- $2 - the second field.
+- $n - the nth field.
 
-### Использование нескольких команд
-Awk позволяет обрабатывать данные с использованием многострочных скриптов. Для того, чтобы передать awk многострочную команду при вызове его из консоли, нужно разделить её части точкой с запятой:
+Fields are selected from the text using a delimiter character. By default these are space characters like the spacebar or a tab.
+
+### Using multiple commands
+
+Awk allows you to process data using multi-line scripts. To pass a multi-line command to awk when calling it from the console, you need to separate its parts with a semicolon:
 ```shell
 echo "My name is Tom" |
 awk '{
@@ -35,30 +38,31 @@ print $0
 }'
 ```
 
-В данном примере первая команда записывает новое значение в переменную $4, а вторая выводит на экран всю строку. Результат работы скрипта:
+In this example, the first command records the new value into the `$4` variable, and the second command outputs the whole string. The result of the script:
 ```shell
 My name is Adam
 ```
 
-### Форматированный вывод данных
-Команда printf в awk позволяет выводить форматированные данные с помощью спецификаторов форматирования.
+### Formatted data output
 
-Спецификаторы форматирования записывают в таком виде:
+The printf command in awk allows you to output formatted data using format specifiers.
+
+The format specifiers are entered as follows:
 ```shell
 %[modifier]control-letter
 ```
 
-Вот некоторые из них:
-- c — воспринимает переданное ему число как код ASCII-символа и выводит этот символ.
-- d — выводит десятичное целое число.
-- i — то же самое, что и d.
-- e — выводит число в экспоненциальной форме.
-- f — выводит число с плавающей запятой.
-- g — выводит число либо в экспоненциальной записи, либо в формате с плавающей запятой, в зависимости от того, как получается короче.
-- o — выводит восьмеричное представление числа.
-- s — выводит текстовую строку.
+Here are some of them:
+- c — prints a number as an ASCII character and outputs it
+- d — prints a decimal integer
+- i — also prints a decimal integer.
+- e — prints a number in exponential notation.
+- f —  prints a number in floating point notation.
+- g — prints a number in either exponential notation or floating point notation, whichever uses fewer characters.
+- o — prints the octal representation of the number.
+- s — prints a string.
 
-Вот пример форматирования выводимых данных с помощью printf:
+Here is an example of formatting the output using printf:
 ```shell
 awk 'BEGIN{
 x = 100 * 100

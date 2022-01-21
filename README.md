@@ -1,240 +1,250 @@
 # LinuxMonitoring v2.0
 
-Мониторинг и исследование состояния системы в реальном времени.
+Real-time monitoring and research of the system status.
+
+The russian version of the task can be found in the repository.
+
 
 ## Contents
 
-1. [Chapter I](#chapter-i) \
+1. [Chapter I](#chapter-i) 
 2. [Chapter II](#chapter-ii) \
-    2.1. [Bash](#bash) \
-    2.2. [Shell](#shell)
+    2.1. [GoAccess](#goaccess) \
+    2.2. [Prometheus](#prometheus) \
+    2.3. [Grafana](#grafana)
 3. [Chapter III](#chapter-iii) \
-    3.1. [Генератор файлов](#part-1-генератор-файлов)  
-    3.2. [Засорение файловой системы](#part-2-засорение-файловой-системы)  
-    3.3. [Очистка файловой системы](#part-3-очистка-файловой-системы)  
-    3.4. [Генератор логов](#part-4-генератор-логов)  
-    3.5. [Мониторинг](#part-5-мониторинг)  
+    3.1. [File generator](#part-1-file-generator)  
+    3.2. [File system clogging](#part-2-file-system-clogging)  
+    3.3. [Cleaning the file system](#part-3-cleaning-the-file-system)  
+    3.4. [Log generator](#part-4-log-generator)  
+    3.5. [Monitoring](#part-5-monitoring)  
     3.6. [GoAccess](#part-6-goaccess)  
-    3.7. [Prometheus и Grafana](#part-7-prometheus-и-grafana)  
-    3.8. [Готовый дашборд](#part-8-готовый-дашборд)  
-    3.9. [Дополнительно. Свой node_exporter](#part-9-дополнительно-свой-node-exporter)  
+    3.7. [Prometheus and Grafana](#part-7-prometheus-and-grafana)  
+    3.8. [A ready-made dashboard](#part-8-a-ready-made-dashboard)  
+    3.9. [Bonus. Your own node_exporter](#part-9-bonus-your-own-node_exporter)  
 
 
 ## Chapter I
-Планета Земля, США, штат Калифорния, наши дни.
 
-Уже в самом начале рабочего дня Вас вызывают к начальству.
-Там вам сообщают, что ваш приятель Себ уже 3-ий день не приходит на работу.
-Есть риск что его задание не будет завершено в срок.
-В связи с этим, вам поручают изучить Линукс-мониторинг, чтобы в случае необходимости подменить вашего нерадивого товарища.
+Planet Earth, USA, California, nowadays.
 
-Вы заходите в кабинет Себа, садитесь за его компьютер и сразу открываете его подозрительно недлинный файл с заметками.
-Пока вы изучаете ту информацию, что собрал Себ, вы не можете прекратить думать о вкуснейшем обеде, который вы оставили себе в комнате отдыха...
+The working day has just started and you’ve already been called to your superiors. They tell you that your buddy Seb hasn't shown up for work in four days. There is a risk that his task will not be finished on time.
+So, now it's your responsibility to figure out the monitoring in Linux, so that you can take over for your careless teammate if necessary.
+
+You enter Seb's office, sit down in front of his computer and immediately open a suspiciously short file with his notes.
+While you look over the information that Seb has gathered, you can't stop thinking about the delicious lunch you've left in the break room...
+
 
 ## Chapter II
+
 ### **GoAccess**
 
-GoAccess - это анализатор веб-журналов в реальном времени и средство просмотра, которое запускается в терминале или через браузер.
-Он предоставляет ценную статистику HTTP, когда требуется визуальный отчет сервера на лету.
+GoAccess is a log analyser that can handle logs in real time, visualise the information and pass it on via either a terminal or a web browser as a web page.
 
 ### **Prometheus**
 
-Базы данных временных рядов, как следует из их названия, представляют собой системы баз данных,
-специально разработанные для обработки данных, связанных со временем.
+Time series databases, just as their name implies, are database systems, specifically developed to handle time-related data.
 
-Большинство систем использует реляционные базы данных, основанные на таблицах.
-Такие системы удобны, эффективны и масштабируемы.
+Most systems use relational, table-based databases. Time series databases work differently.
+Data is still stored in 'collections', but these collections have one common thing: they aggregate over time.
+Basically, this means that for each point that can be saved, there is a timestamp related to it.
 
-Базы данных временных рядов работают по-другому.
-Данные по-прежнему хранятся в "коллекциях", но эти коллекции имеют общий знаменатель: они агрегируются с течением времени.
-По сути, это означает, что для каждой точки, которую можно сохранить, есть связанная с ней метка времени.
-
-Prometheus — это база данных временных рядов, к которой можно присоединить целую экосистему инструментов, чтобы расширить функционал.
-Prometheus создан, чтобы мониторить самые разные системы: серверы, базы данных, отдельные виртуальные машины, да почти что угодно.
+Prometheus is a time series database to which an entire ecosystem of tools can be attached to extend its functionality. \
+Prometheus is created to monitor a wide variety of systems: servers, databases, virtual machines, basically almost anything.
 
 ### **Grafana**
 
-Grafana — это платформа для визуализации, мониторинга и анализа данных.
-Grafana позволяет пользователям создавать *дашборды* с *панелями*, каждая из которых отображает определенные показатели в течение установленного периода времени.
-Каждый *дашборд* универсален, поэтому его можно настроить для конкретного проекта.
+Grafana is a platform for data visualisation, monitoring and analysis.
+Grafana allows users to create *dashboards* with *panels*, each displaying specific indicators over a set period of time.
 
-*Панель* — базовый элемент визуализации выбранных показателей.
+Each *dashboard* is universal, so it can be customised for a certain project.
 
-*Дашборд* — набор отдельных панелей, размещенных в сетке с набором переменных (например, имя сервера, приложения и т.д.).
+*Panel* is the basic visualisation element of the selected indicators.
+
+*Dashboard* is a set of one or more panels placed in a grid with a set of variables (e.g. server name, application name, etc.).
 
 
 ## Chapter III
-- Написанные Bash-скрипты должны находиться в папке src
-- Для каждого задания должна быть создана папка с названием вида: **0x**, где x - номер задания
-- Все скрипты должны быть декомпозированы и разбиты на несколько файлов
-- Файл с основным сценарием для каждого задания должен называться **main.sh**
-- Во всех скриптах должны быть предусмотрены проверки на некорректный ввод (указаны не все параметры, параметры неправильного формата и т.д.)
+
+- The written bash scripts must be in the src folder
+- For each task you must create a folder with the following name: **0x**, where x is the task number.
+- All scripts must be decomposed and split into several files
+- The main script file for each task must be named **main.sh**
+- All scripts should have checks for incorrect input (not all parameters specified, wrong format parameters, etc.)
+- All scripts must be run on a virtual machine *Ubuntu Server 20.04 LTS*
 
 
-## Part 1. Генератор файлов
+## Part 1. File generator
 
-Вечером вы обнаруживаете, что Майк забрал из комнаты отдыха ваш прекрасный сэндвич, который вы специально принесли из дома.
-Нельзя это просто так оставлять, вы должны подшутить над ним в ответ.
+After a brief look at the information found on Seb's computer, you walk into the break room and find out that Mike has taken your delicious sandwich, which you specially brought from home.
 
-В качестве подготовки вам нужно освоить работу с файлами в bash-скриптах.
+You can't just let it slide, you have to prank him in return and teach him a lesson.
 
-**== Задание ==**
+This will give you a chance to practice working with files in bash scripts. It may be useful in preparing a test environment to set up monitoring tasks.
 
-Написать bash-скрипт. Скрипт запускается с 6 параметрами. Пример запуска скрипта:  
-**script06.sh /opt/test 4 az 5 az.az 3kb**  
+**== Task ==**
 
-**Параметр 1** - это абсолютный путь.  
-**Параметр 2** - это количество вложенных папок.  
-**Параметр 3** - это список букв английского алфавита, используемый в названии папок (не более 7 знаков).  
-**Параметр 4** - это количество файлов в каждой созданной папке.  
-**Параметр 5** - это список букв английского алфавита, используемый в имени файла и расширении (не более 7 знаков для имени, не более 3 знаков для расширения).  
-**Параметр 6** - это размер файлов. (в килобайтах, но не более 100).  
+Write a bash script. The script is run with 6 parameters. An example of running a script: \
+`main.sh /opt/test 4 az 5 az.az 3kb`
 
-Имена папок и файлов должны состоять из только из букв, указанных в параметрах, и использовать каждую из них хотя бы 1 раз.  
-Длина этой части имени должна быть от 4 до 9 знаков, плюс дата запуска скрипта в формате DD.MM.YY, отделённая нижним подчёркиванием, например:  
-**./aaaz_021121/**, **./aaabcer21_021121**  
+**Parameter 1** is the absolute path.  
+**Parameter 2** is the number of subfolders.  
+**Parameter 3** is a list of English alphabet letters used in folder names (no more than 7 characters).
+**Parameter 4** is the number of files in each created folder.  
+**Parameter 5** - the list of English alphabet letters used in the file name and extension (no more than 7 characters for the name, no more than 3 characters for the extension).
+**Parameter 6** - file size (in kilobytes, but not more than 100).
 
-При запуске скрипта в указанном в параметре 1 месте, должны быть созданы папки и файлы в них с соответствующими именами и размером.  
-Записать лог файл с данными по всем созданным папкам и файлам (полный путь, дата создания, размер для файлов).
+Folder and file names must only consist of the letters specified in the parameters and use each of them at least 1 time.  
+The length of this part of the name should be between 4 and 9 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
+**./aaaz_021121/**, **./aaabcer21_021121** \
 
+If `az` has been specified for a folder or a file name, there can be no inverse entry: \
+**./zaaa_021121/** i.e. the order of the characters specified in the parameter must be maintained.
 
-## Part 2. Засорение файловой системы
+When the script runs in the location specified in parameter 1, the folders and files should be created in them with the appropriate names and sizes.
 
-Теперь вы готовы. Пришло время показать Майку, на что способен человек, которого лишили сэндвича.
-
-**== Задание ==**
-
-Написать bash-скрипт. Скрипт запускается с 3 параметрами. Пример запуска скрипта:  
-**script07.sh az az.az 3Mb** 
-
-**Параметр 1** диапазон букв английского алфавита, используемый в названии папок.  
-**Параметр 2** диапазон букв английского алфавита, используемый в имени файла и расширении.  
-**Параметр 3** размер файла. (в Мегабайтах, но не более 100).  
-
-Имена папок и файлов должны состоять из только из букв, указанных в параметрах, и использовать каждую из них хотя бы 1 раз.  
-Длина этой части имени должна быть от 5 до 9 знаков, плюс дата запуска скрипта в формате DD.MM.YY, отделённая нижним подчёркиванием, например:  
-**./aaaz_021121/**, **./aaabcer21_021121**  
-
-При запуске скрипта, он должен в различных (любых) местах файловой системы создавать папки с файлами.  
-Количество вложенных папок - любое. Количество файлов в каждой папке - случайное число (для каждой папки своё).  
-Скрипт должен остановить работу, когда в файловой системе (в разделе /) останется 1 Гб свободного места.  
-Свободное место в файловой системе определять командой:  
-**df -h /**  
-Записать лог файл с данными по всем созданным папкам и файлам (полный путь, дата создания, размер для файлов).  
-В конце работы скрипта, вывести на экран время его работы.
+Make a log file with data on all created folders and files (full path, creation date, file size).
 
 
-## Part 3. Очистка файловой системы
+## Part 2. File system clogging
 
-Проклятье! Вы запустили скрипт не на том компьютере. Теперь вам срочно нужно написать скрипт, который всё исправит.
+And now it's time to show Mike what a man whose sandwich has been stolen is capable of.
 
-**== Задание ==**
+**== Task ==**
 
-Написать bash-скрипт. Скрипт запускается с 1 параметром.
-Скрипт должен уметь очистить систему от созданных в **Part 7** папок и файлов 3 способами:
+Write a bash script. The script is run with 3 parameters. An example of running a script: \
+`main.sh az az.az 3Mb`
 
-1. По лог файлу
-2. По дате создания
-3. По маске имени.  
+**Parameter 1** is the range of English alphabet letters used in the folder names.  
+**Parameter 2** is the range of English alphabet letters used in the file name and the extension.  
+**Parameter 3** - is the file size (in Megabytes, but not more than 100).
 
-Способ очистки задается при запуске скрипта, как параметр со значением 1, 2 или 3.
+Folder and file names must only consist of the letters specified in the parameters and use each of them at least 1 time.  
+The length of this part of the name should be between 5 and 9 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
+**./aaaz_021121/**, **./aaabcer21_021121** \
 
+If `az` has been specified for a folder or a file name, there can be no inverse entry: \
+**./zaaa_021121/** i.e. the order of the specified characters in the parameter must be maintained.
 
-## Part 4. Генератор логов
+When running the script, file folders must be created in different (any, except paths containing **bin** or **sbin**) locations on the file system.
+The number of subfolders is up to 100. The number of files in each folder is a random number (different for each folder). The script should stop running when there is 1GB of free space left on the file system (in the / partition).
+Check the file system free space with  `df -h /`.
 
-Вы наконец закончили со своими делами и готовы разбираться в мониторинге.
-Для начала вам нужно создать логи, которые вы будете анализировать.
+Make a log file with data on all created folders and files (full path, creation date, file size).
 
-**== Задание ==**
-
-Написать bash-скрипт, генерирующий 5 логов **nginx** в *combined* формате.
-Каждый лог должен содержать информацию за 1 день.
-
-За день должно быть сгенерировано случайное число записей от 10 до 100.
-Для каждой записи должны случайным образом генерироваться:
-
-1. IP (любые)
-2. Коды ответа (200, 201, 400, 401, 403, 404, 500, 501, 502, 503)
-3. Методы (GET, POST, PUT, PATCH, DELETE)
-4. Даты (в рамках заданного дня лога)
-5. Агенты (Mozilla, Google Chrome, Opera, Safari, Internet Explorer, Microsoft Edge, Crawler and bot, Library and net tool)
-
-В комментариях в вашем скрипте указать, что означает каждый из использованных кодов ответа.
+At the end of the script, display the start time, end time and total running time of the script. Complete the log file with this data.
 
 
-## Part 5. Мониторинг
+## Part 3. Cleaning the file system
 
-Теперь, когда у вас есть файлы для анализа, вы можете приступить к непосредственно мониторингу.
+Damn it! You ran the script on the wrong computer. Now you urgently need to write a script to fix it.
 
-**== Задание ==**
+**== Task ==**
 
-Написать bash-скрипт для разбора логов **nginx** из [Части 4](#part-4-генератор-логов) через **awk**.
+Write a bash script. The script is run with 1 parameter. The script should be able to clear the system from the folders and files created in [Part 2](#part-2-file-system-clogging) in 3 ways:
 
-Скрипт запускается с 1 параметром, который принимает значение 1, 2, 3 или 4.
-В зависимости от значения параметра вывести:
+1. By log file
+2. By creation date
+3. By name mask.
 
-1. Все записи, отсортированные по коду ответа
-2. Все уникальные IP, встречающиеся в записях
-3. Все запросы с ошибками (код ответа - 4хх или 5хх)
-4. Все уникальные IP, которые встречаются среди ошибочных запросов
+The cleaning method is set as a parameter with a value of 1, 2 or 3 when you run the script.
+
+
+## Part 4. Log generator
+
+You are finally done with your stuff and ready to continue working out the monitoring.
+
+To begin with, it would be a good idea to create logs that can be analysed.
+
+**== Task ==**
+
+Write a bash script or a C program that generates 5 **nginx** log files in *combined* format. Each log should contain information for 1 day.
+
+A random number between 100 and 1000 entries should be generated per day.
+For each entry there should be randomly generated the following:
+
+1. IP (any correct one, i.e. no ip such as 999.111.777.777)
+2. Response codes (200, 201, 400, 401, 403, 404, 500, 501, 502, 503)
+3. methods (GET, POST, PUT, PATCH, DELETE)
+4. Dates (within a specified log day, should be in ascending order)
+5. Agent request URL
+6. Agents (Mozilla, Google Chrome, Opera, Safari, Internet Explorer, Microsoft Edge, Crawler and bot, Library and net tool)
+
+Specify in the comments of your script/program what each of the response codes used means.
+
+
+## Part 5. Monitoring
+
+Now that you have the files to analyse, you can move on to monitoring.
+
+**== Task ==**
+
+Write a bash script to parse **nginx** logs from [Part 4](#part-4-log-generator) via **awk**.
+The script is run with 1 parameter, which has a value of 1, 2, 3 or 4.
+
+Depending on the value of the parameter, output the following:
+
+1. All entries sorted by response code
+2. All unique IPs found in the entries
+3. All requests with errors (response code - 4xx or 5xxx)
+4. All unique IPs found among the erroneous requests
 
 
 ## Part 6. **GoAccess**
 
-Смотреть на результаты ваших трудов в консоли конечно неплохо, но почему бы не воспользоваться готовым решением, предоставляющим удобный интерфейс?
+Watching the results of your efforts in the console is certainly nice, but why not also use a ready-made solution that provides a user-friendly interface?
 
-**== Задание ==**
+**== Task ==**
 
-Написать bash-скрипт с использованием утилиты GoAccess.
-С помощью скрипта должно быть возможно получение той же информации, что и в [Части 5](#part-5-мониторинг)
+Use the GoAccess utility to get the same information as in [Part 5](#part-5-monitoring)
 
-Получить доступ к веб интерфейсу утилиты с вашей локальной машины (мака).
-
-
-## Part 7. **Prometheus** и **Grafana**
-
-Работа с логами окончена. Теперь пришло время мониторить состояние системы в целом.
-
-**== Задание ==**
-
-##### Установить и настроить утилиты **Prometheus** и **Grafana**
-##### Получить доступ к веб интерфейсам утилит с вашей локальной машины (мака)
-
-##### Добавить на дашборд **Grafana** отображение CPU, Memory, место на HDD и IO operation per second на HDD
-
-##### Запустить ваш bash-скрипт из [Части 2](#part-2-засорение-файловой-системы)
-##### Посмотреть на нагрузку HDD (место на диске и операции чтения/записи)
-
-##### Установить утилиту **stress** и запустить команду `stress -c 2 -i 1 -m 1 --vm-bytes 32M -t 10s`
-##### Посмотреть на нагрузку HDD, Memory и CPU
+Open the web interface of the utility on the local machine.
 
 
-## Part 8. Готовый дашборд
+## Part 7. **Prometheus** and **Grafana**
 
-Собственно, зачем составлять собственный дашборд, если, как говорится, "всё уже украдено до нас"?
-Почему бы не взять готовый дашборд, на котором есть все нужные метрики?
+Practice with the logs is over for now. It's time to monitor the state of the system in general.
 
-**== Задание ==**
+**== Task ==**
 
-##### Установить готовый дашборд *Node Exporter Quickstart and Dashboard* с официального сайта **Grafana Labs**
+##### Install and configure **Prometheus** and **Grafana** in virtual machine
+##### Access the **Prometheus** and **Grafana** web interfaces from a local machine
 
-##### Провести те же тесты, что и в [Части 7](#part-7-prometheus--grafana)
+##### Add to the **Grafana** dashboard a display of CPU, available RAM, free space and the number of I/O operations on the hard disk.
 
-##### Запустить ещё одну виртуальную машину, находящуюся в одной сети с текущей
-##### Запустить тест сети с помощью утилиты **iperf3**
+##### Run your bash script from [Part 2](#part-2-file-system-clogging)
+##### Check the hard disk load (disk space and read/write operations)
 
-##### Посмотреть на нагрузку сетевого интерфейса
+##### Install the **stress** utility and run the following command `stress -c 2 -i 1 -m 1 --vm-bytes 32M -t 10s`
+##### Check the hard disk, RAM and CPU load
 
 
-## Part 9. Дополнительно. Свой *node_exporter*
+## Part 8. A ready-made dashboard
 
-Анализировать систему с помощью специальных утилит полезно и удобно, но вам всегда хотелось понять, как же они работают.
+After all, why make your own dashboard when, as they say, "everything has already been stolen before us"?
+Why not get a ready-made dashboard that has all the metrics you need?
 
-**== Задание ==**
+**== Task ==**
 
-Написать bash-скрипт, который собирает информацию по базовым метрикам системы (CPU, Memory, HDD (объем)).
-Скрипт должен формировать html страничку по формату **Prometheus**, которую будет отдавать **nginx**.
+##### Download the ready-made dashboard *Node Exporter Quickstart and Dashboard* from **Grafana Labs** official website.
 
-##### Поменять конфигурационный файл **Prometheus**, чтобы он собирал информацию с созданной вами странички.
+##### Run the same tests as in [Part 7](#part-7-prometheus-and-grafana)
 
-##### Провести те же тесты, что и в [Части 7](#part-7-prometheus--grafana)
+##### Start another virtual machine within the same network as the current one
+##### Run a network load test using **iperf3**
+
+##### Check the network interface load
+
+
+## Part 9. Bonus. Your own *node_exporter*
+
+It is always useful and convenient to analyse the system with special utilities, but you have always wanted to understand how they work.
+
+**== Task ==**
+
+Write a bash script or a C program that collects information on basic system metrics (CPU, RAM, hard disk (capacity)). The script or a program should make a html page in **Prometheus** format, which will be served by **nginx**. \
+The page itself can be refreshed within a bash script or a program (in a loop), or using the cron utility, but not more often than every 3 seconds.
+
+##### Change the **Prometheus** configuration file so it collects information from the page you created.
+
+##### Run the same tests as in [Part 7](#part-7-prometheus-and-grafana)
