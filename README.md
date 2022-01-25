@@ -95,8 +95,8 @@ Write a bash script. The script is run with 6 parameters. An example of running 
 **Parameter 6** - file size (in kilobytes, but not more than 100).
 
 Folder and file names must only consist of the letters specified in the parameters and use each of them at least 1 time.  
-The length of this part of the name should be between 4 and 9 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
-**./aaaz_021121/**, **./aaabcer21_021121** \
+The length of this part of the name should be at least 4 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
+**./aaaz_021121/**, **./aaazzzz_021121** \
 
 If `az` has been specified for a folder or a file name, there can be no inverse entry: \
 **./zaaa_021121/** i.e. the order of the characters specified in the parameter must be maintained.
@@ -115,13 +115,13 @@ And now it's time to show Mike what a man whose sandwich has been stolen is capa
 Write a bash script. The script is run with 3 parameters. An example of running a script: \
 `main.sh az az.az 3Mb`
 
-**Parameter 1** is the range of English alphabet letters used in the folder names.  
-**Parameter 2** is the range of English alphabet letters used in the file name and the extension.  
+**Parameter 1** is a list of English alphabet letters used in folder names (no more than 7 characters).  
+**Parameter 2** the list of English alphabet letters used in the file name and extension (no more than 7 characters for the name, no more than 3 characters for the extension).  
 **Parameter 3** - is the file size (in Megabytes, but not more than 100).
 
 Folder and file names must only consist of the letters specified in the parameters and use each of them at least 1 time.  
-The length of this part of the name should be between 5 and 9 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
-**./aaaz_021121/**, **./aaabcer21_021121** \
+The length of this part of the name should be at least 5 characters, plus the script run date in DD.MM.YY format, separated by underscores, for example: \
+**./aaaz_021121/**, **./aaazzzz_021121** \
 
 If `az` has been specified for a folder or a file name, there can be no inverse entry: \
 **./zaaa_021121/** i.e. the order of the specified characters in the parameter must be maintained.
