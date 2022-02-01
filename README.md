@@ -144,10 +144,12 @@ Damn it! You ran the script on the wrong computer. Now you urgently need to writ
 Write a bash script. The script is run with 1 parameter. The script should be able to clear the system from the folders and files created in [Part 2](#part-2-file-system-clogging) in 3 ways:
 
 1. By log file
-2. By creation date
-3. By name mask.
+2. By creation date and time
+3. By name mask (i.e. characters, underlining and date).
 
 The cleaning method is set as a parameter with a value of 1, 2 or 3 when you run the script.
+
+*When deleting by date and time of creation, the user enters the start and end times up to the minute. All files created within the specified time interval must be deleted. The input can be implemented either through parameters or at runtime.*
 
 
 ## Part 4. Log generator
