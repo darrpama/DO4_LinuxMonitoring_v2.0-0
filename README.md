@@ -1,5 +1,8 @@
 # LinuxMonitoring v2.0
 
+> При старте работы над проектом просим вас постараться хронометрировать время работы над проектом.
+> По завершении работы над проектом просим вас ответить на два вопроса [в этом опросе](https://forms.gle/V8JrqwsAJAnCgq8QA)
+
 Real-time monitoring and research of the system status.
 
 The russian version of the task can be found in the repository.
