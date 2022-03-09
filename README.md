@@ -29,6 +29,8 @@ The russian version of the task can be found in the repository.
 
 ## Chapter I
 
+![linux_monitoringv2.0](misc/images/linux_monitoringv2.0.png)
+
 Planet Earth, USA, California, nowadays.
 
 The working day has just started and you’ve already been called to your superiors. They tell you that your buddy Seb hasn't shown up for work in four days. There is a risk that his task will not be finished on time.
