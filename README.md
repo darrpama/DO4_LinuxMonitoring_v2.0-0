@@ -1,8 +1,5 @@
 # LinuxMonitoring v2.0
 
-> При старте работы над проектом просим вас постараться хронометрировать время работы над проектом.
-> По завершении работы над проектом просим вас ответить на два вопроса [в этом опросе](https://forms.gle/V8JrqwsAJAnCgq8QA)
-
 Real-time monitoring and research of the system status.
 
 The russian version of the task can be found in the repository.
@@ -255,3 +252,6 @@ The page itself can be refreshed within a bash script or a program (in a loop), 
 ##### Change the **Prometheus** configuration file so it collects information from the page you created.
 
 ##### Run the same tests as in [Part 7](#part-7-prometheus-and-grafana)
+
+
+💡 [Tap here](https://forms.yandex.ru/u/6357f4efd0468834861f10cd/) **to leave your feedback on the project**. Pedago Team really tries to make your educational experience better.
