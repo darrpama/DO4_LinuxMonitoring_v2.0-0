@@ -254,4 +254,4 @@ The page itself can be refreshed within a bash script or a program (in a loop), 
 ##### Run the same tests as in [Part 7](#part-7-prometheus-and-grafana)
 
 
-💡 [Tap here](https://forms.yandex.ru/cloud/641818e069387223cba1286e/) **to leave your feedback on the project**. Pedago Team really tries to make your educational experience better.
+💡 [Tap here](https://forms.yandex.ru/cloud/641818e069387223cba1286e/) **to leave your feedback on the project**. Product Team really tries to make your educational experience better.
