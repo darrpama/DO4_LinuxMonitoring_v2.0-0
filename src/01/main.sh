@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source err.sh
 source check.sh
 
 if [ $# -eq 6 ]
@@ -12,9 +11,9 @@ then
 	file_letters=$5
 	file_size=$6
 
-	check_args( absolute_path number_of_subfolders folder_letters number_of_files file_letters file_size )
-	create_folders( absolute_path number_of_subfolders folder_letters number_of_files file_letters file_size )
+	check_args $absolute_path $number_of_subfolders $folder_letters $number_of_files $file_letters $file_size 
+
 else
-	err "Входные параметры: [Абсолютный путь (/opt/test)] [Количество вложенных папок (1-99)] [Латинские буквы в названии папок, не более 7 (a-z)] [Количество вложенных файлов (1-99)] [Латинские буквы в названии файлов, не более 7 для имени, не более 3 для расширения (a-z.a-z)] [Размер файлов в килобайтах, но не более 100 (3kb)]"
+	print_err 0
 	exit 1
 fi
