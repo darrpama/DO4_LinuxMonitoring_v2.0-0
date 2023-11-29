@@ -1,26 +1,19 @@
 #!/bin/bash
 
-source err.sh
+source check.sh
 
 if [ $# -eq 6 ]
 then
-	check=$(echo "$1" | grep -E "^\-?[0-9]*\.?[0-9]+$")
-	if [ "$check" != '' ]
-	then
-		err "Один из параметров написан неправильно"
-		exit 1
-	else
-		echo "Всё отлично"
-	fi
+	absolute_path=$1
+	number_of_subfolders=$2
+	folder_letters=$3
+	number_of_files=$4
+	file_letters=$5
+	file_size=$6
+
+	check_args $absolute_path $number_of_subfolders $folder_letters $number_of_files $file_letters $file_size 
+
 else
-	err "Скрипт принимает 6 параметров:"
-	err "main.sh /opt/test 4 az 5 az.az 3kb"
-	err "Параметр 1 - это абсолютный путь."
-	err "Параметр 2 - количество вложенных папок."
-	err "Параметр 3 - список букв английского алфавита, используемый в названии папок (не более 7 знаков)."
-	err "Параметр 4 - количество файлов в каждой созданной папке."
-	err "Параметр 5 - список букв английского алфавита, используемый в имени файла и расширении"
-	err "(не более 7 знаков для имени, не более 3 знаков для расширения)."
-	err "Параметр 6 - размер файлов (в килобайтах, но не более 100)."
+	print_err 0
 	exit 1
 fi
